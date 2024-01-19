@@ -1,0 +1,97 @@
+<template>
+  <div class="form-item-wrapper">
+    <el-upload
+      ref="uploadRef"
+      :action="action"
+      :headers="headers"
+      :method="method"
+      :data="data"
+      :name="name"
+      :accept="accept"
+      :with-credentials="withCredentials"
+      :multiple="multiple"
+      :limit="limit"
+      :show-file-list="showFileList"
+      :drag="drag"
+      :auto-upload="autoUpload"
+      :list-type="listType"
+      :on-exceed="onExceed"
+      :before-upload="beforeUpload"
+      :on-success="uploadSuccess"
+      :on-error="uploadError">
+      <template v-if="button">
+        <el-button :type="'primary'">
+          <template #icon v-if="prefixIcon">
+            <el-icon style="margin-right: 4px;">
+              <component :is='prefixIcon'></component>
+            </el-icon>
+          </template>
+          <span>{{ buttonText }}</span>
+          <template v-if="suffixIcon">
+            <el-icon style="margin-left: 4px;">
+              <component :is='suffixIcon'></component>
+            </el-icon>
+          </template>
+        </el-button>
+      </template>
+      <template v-else-if="trigger">
+        <component :is='trigger'></component>
+      </template>
+    </el-upload>
+  </div>
+</template>
+<script setup lang="ts">
+import { UploadFile, UploadFiles, UploadRawFile, ElUpload, ElButton, ElIcon } from 'element-plus';
+import { UploadComponentProps } from '../types/Upload';
+import { EmitEventNameEnumKeys } from '../types/emit';
+
+defineOptions({
+  name: "Upload"
+})
+
+const props = withDefaults(defineProps<UploadComponentProps>(), {
+  action: "#",
+  method: "POST",
+  multiple: false,
+  data: {},
+  name: "file",
+  withCredentials: false,
+  showFileList: true,
+  drag: false,
+  accept: "",
+  listType: "text",
+  autoUpload: true,
+  button: true,
+  buttonText: "文件上传"
+})
+
+const emit = defineEmits([
+  EmitEventNameEnumKeys.onBeforeUpload,
+  EmitEventNameEnumKeys.onUploadSuccess,
+  EmitEventNameEnumKeys.onUploadError
+])
+
+function beforeUpload(rawFile: UploadRawFile) {
+  emit(EmitEventNameEnumKeys.onBeforeUpload, rawFile)
+}
+
+function uploadSuccess(response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) {
+  emit(EmitEventNameEnumKeys.onUploadSuccess, {
+    response,
+    uploadFile,
+    uploadFiles
+  })
+}
+
+function uploadError(error: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) {
+  emit(EmitEventNameEnumKeys.onUploadError, {
+    response: error,
+    uploadFile,
+    uploadFiles
+  })
+}
+
+</script>
+<style scoped lang="scss">
+  
+</style>

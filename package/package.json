@@ -1,0 +1,19 @@
+{
+  "name": "@xuejian/form",
+  "version": "0.1.7",
+  "description": "基于 vue3 + Element-Plus + ts 实现的表单组件。",
+  "author": "xuejian",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "element-plus": "^2.4.4",
+    "vue": "^3.3.11"
+  },
+  "devDependencies": {
+    "sass": "^1.69.7",
+    "typescript": "^5.2.2"
+  }
+}
