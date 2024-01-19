@@ -8,6 +8,9 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
+  "repository": {
+    "url": "https://gitee.com/xj_page/form"
+  },
   "dependencies": {
     "element-plus": "^2.4.4",
     "vue": "^3.3.11"
