@@ -3,7 +3,7 @@ import Form from '../package/lib/Form.vue';
 import { ref, reactive } from "vue"
 import { Search, Upload } from "@element-plus/icons-vue"
 import { FormRules } from 'element-plus';
-import { Input, FormConfigList } from '../package';
+import { Input, FormConfigList } from '../package/index';
 
 const model = ref({
   test: '',
