@@ -13,10 +13,10 @@
           :key="index" 
           :config="cfg" 
           :model="model"
-          @on-update="(value) => updateHandle(cfg, value)"
-          @on-before-upload="(data) => beforeUpload(cfg, data)"
-          @on-upload-success="(data) => uploadSuccess(cfg, data)"
-          @on-upload-error="(data) => uploadError(cfg, data)">
+          @update:modelValue="(value) => updateModelValue(cfg, value)"
+          @before-upload="(data) => beforeUpload(cfg, data)"
+          @upload-success="(data) => uploadSuccess(cfg, data)"
+          @upload-error="(data) => uploadError(cfg, data)">
         </FormBase>
       </template>
       <el-form-item v-if="search">
@@ -51,6 +51,12 @@ const props = withDefaults(defineProps<FormComponentProps>(), {
 })
 
 const emit = defineEmits<FormComponentEmits>()
+
+function updateModelValue(config: FormItemConfig, value: any) {
+  emit('update:model', Object.assign(props.model, {
+    [config.prop]: value
+  }))
+}
 
 function updateHandle(config: FormItemConfig, data: any) {
   emit('update:model', Object.assign(props.model, {

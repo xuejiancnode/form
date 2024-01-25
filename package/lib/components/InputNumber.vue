@@ -37,11 +37,10 @@ const props = withDefaults(defineProps<InputNumberComponentProps>(), {
   valueOnClear: null
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys.onUpdate, "update:modelValue"])
+const emit = defineEmits([EmitEventNameEnumKeys["onUpdate:modelValue"]])
 
 function changeHandle(number: number | undefined) {
-  emit(EmitEventNameEnumKeys.onUpdate, number)
-  emit('update:modelValue', number)
+  emit(EmitEventNameEnumKeys["onUpdate:modelValue"], number)
 }
 </script>
 <style scoped lang="scss">

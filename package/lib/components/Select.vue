@@ -56,13 +56,12 @@ const props = withDefaults(defineProps<SelectComponentProps>(), {
   },
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys.onUpdate, "update:modelValue"])
+const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
 
 function changeHandle(value: any) {
-  emit(EmitEventNameEnumKeys.onUpdate, value)
-  emit('update:modelValue', value)
+  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], value)
 }
 </script>
 <style scoped lang="scss">
   
-</style>../types/Select
+</style>

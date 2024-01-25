@@ -42,11 +42,10 @@ const props = withDefaults(defineProps<SliderComponentProps>(), {
   height: "200px"
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys.onUpdate, "update:modelValue"])
+const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
 
 function inputHandle(val: number | number[]) {
-  emit(EmitEventNameEnumKeys.onUpdate, val)
-  emit('update:modelValue', val)
+  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], val)
 }
 </script>
 <style scoped lang="scss">

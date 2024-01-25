@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import Form from '../package/lib/Form.vue';
 import { ref, reactive } from "vue"
-import { FormConfigList } from "../package/lib/types/Form"
 import { Search, Upload } from "@element-plus/icons-vue"
 import { FormRules } from 'element-plus';
-import { Input } from "../package/index"
+import { Input, FormConfigList } from '../package';
 
 const model = ref({
   test: '',
@@ -89,7 +88,7 @@ const config = reactive<FormConfigList>([
     uploadProps: {
       action: "/api/file/upload",
       headers: {
-        'Type': '',
+        'Type': 'web',
         'Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOjIxMDk4NDEwNTA5MDAwMTk3LCJyblN0ciI6Im1OcUtuNURSM2tBUUx5MHVVNmRtTExYSGhCNlZ3bDVhIn0.nprO2LqXrgECTXAhqTxKyCoZLCDhQ34tzl-ZzFFDbAM'
       },
       showFileList: false,
@@ -98,7 +97,7 @@ const config = reactive<FormConfigList>([
   }
 ])
 
-function handle() {
+function handle(data) {
 }
 
 const FormRef = ref<InstanceType<typeof Form>>()
@@ -116,7 +115,6 @@ const value = ref("")
 function updateHandle(val) {
   value.value = val
 }
-
 </script>
 
 <template>
@@ -135,7 +133,7 @@ function updateHandle(val) {
     <br>
     <el-button @click="save">保存</el-button>
     <div>{{ value }}</div>
-    <Input :model-value="value" @update="updateHandle"></Input>
+    <Input v-model:model-value="value"></Input>
   </div>
   <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>

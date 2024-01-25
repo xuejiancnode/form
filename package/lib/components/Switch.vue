@@ -33,11 +33,10 @@ const props = withDefaults(defineProps<SwitchComponentProps>(), {
 
 const loadingState = ref(false)
 
-const emit = defineEmits([EmitEventNameEnumKeys.onUpdate, "update:modelValue"])
+const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
 
 function changeHandle(val: boolean | string | number) {
-  emit(EmitEventNameEnumKeys.onUpdate, val)
-  emit('update:modelValue', val)
+  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], val)
 }
 
 async function beforeChangeHandle() {

@@ -28,11 +28,10 @@ const props = withDefaults(defineProps<InputComponentProps>(), {
   placeholder: "请输入",
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys.onUpdate, "update:modelValue"])
+const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
 
 function inputHandle(val: any) {
-  emit(EmitEventNameEnumKeys.onUpdate, val)
-  emit('update:modelValue', val)
+  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], val)
 }
 </script>
 <style scoped lang="scss">

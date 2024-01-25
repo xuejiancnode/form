@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ElFormItem } from 'element-plus';
-import { EmitEventNameEnumKeys } from './types/emit';
+import { EmitEventNameEnumKeys, getEmit } from './types/emit';
 import { defineComponent, h } from "vue"
 const components: Record<string, any> = import.meta.glob("./components/*.vue", { eager: true });
 
@@ -28,7 +28,8 @@ export default defineComponent({
       Object.keys(EmitEventNameEnumKeys).forEach(item => {
         // @ts-ignore
         events[item] = function (data: any) {
-          emit(item, data)
+          // @ts-ignore
+          emit(getEmit(item), data)
         }
       })
     }
@@ -60,38 +61,6 @@ export default defineComponent({
       Object.assign(componentProps, {
         ...props.config[propsMap[props.config.type]]
       })
-      /* switch (props.config.type) {
-        case 'Input':
-          Object.assign(componentProps, {
-            ...props.config.inputProps
-          })
-          break;
-        case 'InputNumber':
-          Object.assign(componentProps, {
-            ...props.config.inputNumberProps
-          })
-          break;
-        case 'Select':
-          Object.assign(componentProps, {
-            ...props.config.selectProps
-          })
-          break;
-        case 'DatePicker':
-          Object.assign(componentProps, {
-            ...props.config.datePickerProps
-          })
-          break;
-        case 'Slider':
-          Object.assign(componentProps, {
-            ...props.config.sliderProps
-          })
-          break;
-        case 'Switch':
-          Object.assign(componentProps, {
-            ...props.config.switchProps
-          })
-          break;
-      } */
       
       return h(
         components[`./components/${props.config.type}.vue`].default,

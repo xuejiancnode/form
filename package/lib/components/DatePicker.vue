@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<DatePickerComponentProps>(), {
   rangeSeparator: "-",
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys.onUpdate, "update:modelValue"])
+const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
 
 const dateValue = ref("")
 
@@ -50,8 +50,7 @@ watchEffect(() => {
 })
 
 function changeHandle(date: any) {
-  emit(EmitEventNameEnumKeys.onUpdate, date)
-  emit('update:modelValue', date)
+  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], date)
 }
 </script>
 <style scoped lang="scss">
