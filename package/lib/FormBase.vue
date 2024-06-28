@@ -1,8 +1,14 @@
 <script lang="ts">
+import {
+  FormEmitEventName,
+  AnyProperty,
+  FormItemComponentPropsMap
+} from './types';
+import {
+  toNameOfHump,
+} from './util';
+
 import { ElFormItem } from 'element-plus';
-import { EmitEventNameEnumKeys, getEmit } from './types/emit';
-import { defineComponent, h } from "vue"
-const components: Record<string, any> = import.meta.glob("./components/*.vue", { eager: true });
 
 export default defineComponent({
   name: "FormBase",
@@ -21,49 +27,63 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    const events = {}
+    let reg = /([^\/]+)(?=\.\w+$)/
+
+    const componentModules: Record<string, AnyProperty> = import.meta.glob('./components/*.vue', {eager: true})
+    
+    const components: AnyProperty = {}
+    
+    let componentModulesKeys = Object.keys(componentModules).map(key => {
+      return {
+        name: key.match(reg)![1],
+        path: key
+      }
+    })
+
+    componentModulesKeys.forEach(({name, path}) => {
+      components[name] = componentModules[path].default
+    })
+
+    // @ts-ignore
+    const events: AnyProperty = {
+      'onUpdate:modelValue'(data: any) {
+        emit('update:modelValue', data)
+      }
+    }
 
     // 注册表单组件事件回调
     function subscribeEvent() {
-      Object.keys(EmitEventNameEnumKeys).forEach(item => {
-        // @ts-ignore
-        events[item] = function (data: any) {
+      Object.keys(FormEmitEventName).forEach(eventName => {
+        events[eventName] = function (data: any) {
           // @ts-ignore
-          emit(getEmit(item), data)
+          emit(FormEmitEventName[eventName], data)
         }
       })
     }
 
     subscribeEvent()
 
-    function createComponent() {
-      const componentProps: {
-        [key: string]: any
-      } = {
+    function createElComponent() {
+      const componentProps = {
         ...props.config,
+        // placeholder: props.config.placeholder,
+        // prop: props.config.prop,
         modelValue: props.model[props.config.prop],
         type: props.config.inputType,
         disabled: typeof props.config.disabled === 'function' ? props.config.disabled() : props.config.disabled,
+        style: {
+          minWidth: '200px'
+        },
         iconProps: props.config.iconProps,
         ...events,
       }
 
-      const propsMap: any = {
-        'Input': 'inputProps',
-        'InputNumber': 'inputNumberProps',
-        'Select': 'selectProps',
-        'DatePicker': 'datePickerProps',
-        'Slider': 'sliderProps',
-        'Switch': 'switchProps',
-        'Upload': 'uploadProps',
-      }
-
       Object.assign(componentProps, {
-        ...props.config[propsMap[props.config.type]]
+        ...props.config[FormItemComponentPropsMap[props.config.type as keyof typeof FormItemComponentPropsMap]]
       })
       
       return h(
-        components[`./components/${props.config.type}.vue`].default,
+        components[props.config.type],
         componentProps
       )
     }
@@ -77,12 +97,13 @@ export default defineComponent({
           label: props.config.label,
           prop: props.config.prop,
           rules: props.config.rules,
+          style: props.config.style,
           required: props.config.required,
           size: props.config.size,
           'label-width': props.config.labelWidth,
           'show-message': props.config.showMessage,
           'inline-message': props.config.inlineMessage
-        }, createComponent
+        },() => createElComponent()
       )
     }
     return {
@@ -94,3 +115,7 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+
+</style>

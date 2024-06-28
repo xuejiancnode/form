@@ -43,7 +43,8 @@
 <script setup lang="ts">
 import { UploadFile, UploadFiles, UploadRawFile, ElUpload, ElButton, ElIcon } from 'element-plus';
 import { UploadComponentProps } from '../types/Upload';
-import { EmitEventNameEnumKeys } from '../types/emit';
+import { withDefaults } from "vue"
+import { FormEmitEventName } from '../types';
 
 defineOptions({
   name: "Upload"
@@ -66,17 +67,17 @@ const props = withDefaults(defineProps<UploadComponentProps>(), {
 })
 
 const emit = defineEmits([
-  EmitEventNameEnumKeys.onBeforeUpload,
-  EmitEventNameEnumKeys.onUploadSuccess,
-  EmitEventNameEnumKeys.onUploadError
+  FormEmitEventName.beforeUpload,
+  FormEmitEventName.uploadSuccess,
+  FormEmitEventName.uploadError
 ])
 
 function beforeUpload(rawFile: UploadRawFile) {
-  emit(EmitEventNameEnumKeys.onBeforeUpload, rawFile)
+  emit(FormEmitEventName.beforeUpload, rawFile)
 }
 
 function uploadSuccess(response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) {
-  emit(EmitEventNameEnumKeys.onUploadSuccess, {
+  emit(FormEmitEventName.uploadSuccess, {
     response,
     uploadFile,
     uploadFiles
@@ -84,7 +85,7 @@ function uploadSuccess(response: any, uploadFile: UploadFile, uploadFiles: Uploa
 }
 
 function uploadError(error: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) {
-  emit(EmitEventNameEnumKeys.onUploadError, {
+  emit(FormEmitEventName.uploadError, {
     response: error,
     uploadFile,
     uploadFiles

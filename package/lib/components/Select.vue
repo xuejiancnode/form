@@ -26,9 +26,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { EmitEventNameEnumKeys } from '../types/emit';
+import { FormEmitEventName } from '../types';
 import { SelectComponentProps } from '../types/Select';
 import { ElSelect, ElOption } from "element-plus"
+import { withDefaults } from "vue"
 
 defineOptions({
   name: "Select"
@@ -56,10 +57,14 @@ const props = withDefaults(defineProps<SelectComponentProps>(), {
   },
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
+const emit = defineEmits([
+  FormEmitEventName.updateModelValue,
+  FormEmitEventName.change,
+])
 
 function changeHandle(value: any) {
-  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], value)
+  emit(FormEmitEventName.updateModelValue, value)
+  emit(FormEmitEventName.change, value)
 }
 </script>
 <style scoped lang="scss">

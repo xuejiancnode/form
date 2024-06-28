@@ -12,14 +12,17 @@
       :controls-position="controlsPosition"
       :placeholder="placeholder"
       :value-on-clear="valueOnClear"
-      @change="changeHandle">
+      @change="changeHandle"
+      @focus="focusHandle"
+      @blur="blurHandle">
     </el-input-number>
   </div>
 </template>
 <script setup lang="ts">
+import { FormEmitEventName } from "../types";
 import { InputNumberComponentProps } from "../types/InputNumber"
-import { EmitEventNameEnumKeys } from "../types/emit";
 import { ElInputNumber } from "element-plus"
+import { withDefaults } from "vue"
 
 defineOptions({
   name: "InputNumber"
@@ -37,10 +40,24 @@ const props = withDefaults(defineProps<InputNumberComponentProps>(), {
   valueOnClear: null
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys["onUpdate:modelValue"]])
+const emit = defineEmits([
+  FormEmitEventName.updateModelValue,
+  FormEmitEventName.change,
+  FormEmitEventName.focus,
+  FormEmitEventName.blur
+])
 
 function changeHandle(number: number | undefined) {
-  emit(EmitEventNameEnumKeys["onUpdate:modelValue"], number)
+  emit(FormEmitEventName.updateModelValue, number)
+  emit(FormEmitEventName.change)
+}
+
+function focusHandle(e) {
+  emit(FormEmitEventName.focus, e)
+}
+
+function blurHandle(e) {
+  emit(FormEmitEventName.blur, e)
 }
 </script>
 <style scoped lang="scss">

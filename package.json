@@ -12,6 +12,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@xuejian/form": "^0.1.6",
     "element-plus": "^2.4.4",
+    "util-fnc": "^1.0.2",
     "vue": "^3.3.11"
   },
   "devDependencies": {

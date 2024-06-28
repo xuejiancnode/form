@@ -15,9 +15,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { SwitchComponentProps } from '../types';
-import { EmitEventNameEnumKeys } from '../types/emit';
-import { ref } from "vue"
+import { FormEmitEventName, SwitchComponentProps } from '../types';
+import { withDefaults, ref } from "vue"
 import { ElSwitch } from "element-plus"
 
 defineOptions({
@@ -33,10 +32,14 @@ const props = withDefaults(defineProps<SwitchComponentProps>(), {
 
 const loadingState = ref(false)
 
-const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
+const emit = defineEmits([
+  FormEmitEventName.updateModelValue,
+  FormEmitEventName.change
+])
 
 function changeHandle(val: boolean | string | number) {
-  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], val)
+  emit(FormEmitEventName.updateModelValue, val)
+  emit(FormEmitEventName.change, val)
 }
 
 async function beforeChangeHandle() {

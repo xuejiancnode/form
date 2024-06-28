@@ -15,14 +15,16 @@
       :range="range"
       :vertical="vertical"
       :height="height"
-      @input="inputHandle">
+      @input="inputHandle"
+      @change="changeHandle">
     </el-slider>
   </div>
 </template>
 <script setup lang="ts">
+import { FormEmitEventName } from '../types';
 import { SliderComponentProps } from '../types/Slider';
-import { EmitEventNameEnumKeys } from '../types/emit';
 import { ElSlider } from "element-plus"
+import { withDefaults } from "vue"
 
 defineOptions({
   name: "Slider"
@@ -42,10 +44,19 @@ const props = withDefaults(defineProps<SliderComponentProps>(), {
   height: "200px"
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
+const emit = defineEmits([
+  FormEmitEventName.updateModelValue,
+  FormEmitEventName.input,
+  FormEmitEventName.change
+])
 
 function inputHandle(val: number | number[]) {
-  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], val)
+  emit(FormEmitEventName.updateModelValue, val)
+  emit(FormEmitEventName.input, val)
+}
+
+function changeHandle(val: number | number[]) {
+  emit(FormEmitEventName.change, val)
 }
 </script>
 <style scoped lang="scss">

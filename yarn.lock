@@ -980,6 +980,13 @@ reusify@^1.0.4:
   resolved "https://registry.npmmirror.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
+rollup@3:
+  version "3.29.4"
+  resolved "https://registry.npmmirror.com/rollup/-/rollup-3.29.4.tgz#4d70c0f9834146df8705bfb69a9a19c9e1109981"
+  integrity sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==
+  optionalDependencies:
+    fsevents "~2.3.2"
+
 rollup@^4.2.0:
   version "4.9.4"
   resolved "https://registry.npmmirror.com/rollup/-/rollup-4.9.4.tgz#37bc0c09ae6b4538a9c974f4d045bb64b2e7c27c"
@@ -1141,6 +1148,13 @@ unplugin@^1.4.0, unplugin@^1.5.1, unplugin@^1.6.0:
     chokidar "^3.5.3"
     webpack-sources "^3.2.3"
     webpack-virtual-modules "^0.6.1"
+
+util-fnc@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/util-fnc/-/util-fnc-1.0.2.tgz#3823992b48351e9a5443a3182e95e78650cde1cb"
+  integrity sha512-L5aFG1/Sb21nnQxao1PrjXWsRuW2BgX9kkhyW95BzsikbxSM9N6D2+x9P1LKAVeUpetEeXE4TLVqUsYTDjLHbw==
+  dependencies:
+    rollup "3"
 
 vite@^5.0.8:
   version "5.0.11"

@@ -1,7 +1,7 @@
 import { Component } from "vue";
 import { FormItemComponentPropsBase } from "./Form";
 
-export type inputType = 'text' | 'textarea' | 'password' | 'button' | 'checkbox' | 'file' | 'number' | 'radio'
+export type inputType = 'text' | 'textarea' | 'password'
 
 export interface InputPropsBase {
   maxlength?: string | number
@@ -10,6 +10,7 @@ export interface InputPropsBase {
   type?: inputType
   prefixIcon?: string | Component
   suffixIcon?: string | Component
+  inputRule?: (val: any) => boolean
 }
 
 export interface InputComponentProps extends InputPropsBase, FormItemComponentPropsBase { }

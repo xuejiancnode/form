@@ -1,0 +1,78 @@
+<template>
+  <div>
+    <el-cascader
+      ref="cascaderRef"
+      :model-value="modelValue"
+      :options="options"
+      :props="cascaderFieldProps"
+      :placeholder="placeholder"
+      :clearable="clearable"
+      :disabled="disabled"
+      :show-all-levels="showAllLevels"
+      :collapse-tags="collapseTags"
+      :collapse-tags-tooltip="collapseTagsTooltip"
+      :separator="separator"
+      :filterable="filterable"
+      :filter-method="filterMethod"
+      :debounce="debounce"
+      :before-filter="beforeFilter"
+      :popper-class="popperClass"
+      :teleported="teleported"
+      :tag-type="tagType"
+      @change="handleChange"
+    />
+  </div>
+</template>
+<script setup lang="ts">
+import { withDefaults, ref } from "vue";
+import { CascaderComponentProps, FormEmitEventName } from "../types";
+import { CascaderNode, CascaderValue, ElCascader as ElCascaderComponent } from "element-plus";
+
+defineOptions({
+  name: "Cascader"
+})
+
+const props = withDefaults(defineProps<CascaderComponentProps>(), {
+  modelValue: [],
+  options() {
+    return []
+  },
+  cascaderFieldProps() {
+    return {
+      label: "label",
+      value: "value"
+    }
+  },
+  clearable: false,
+  showAllLevels: true,
+  collapseTagsTooltip: false,
+  separator: "/",
+  debounce: 300,
+  popperClass: "",
+  teleported: true,
+  tagType: "info"
+})
+
+const emit = defineEmits([
+  FormEmitEventName.updateModelValue,
+  FormEmitEventName.change,
+])
+
+const cascaderRef = ref<InstanceType<typeof ElCascaderComponent>>()
+
+function handleChange(value: CascaderValue) {
+  emit(FormEmitEventName.updateModelValue, value)
+  emit(FormEmitEventName.change, value)
+}
+
+function getCheckedNodes(leafOnly: boolean): CascaderNode[] | undefined {
+  return cascaderRef.value?.getCheckedNodes(leafOnly)
+}
+
+defineExpose({
+  getCheckedNodes
+})
+</script>
+<style scoped lang="scss">
+  
+</style>

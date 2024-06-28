@@ -5,6 +5,11 @@ import Select from "./components/Select.vue"
 import Slider from "./components/Slider.vue"
 import Switch from "./components/Switch.vue"
 import Upload from "./components/Upload.vue"
+import Button from "./components/Button.vue"
+import Cascader from "./components/Cascader.vue"
+import Checkbox from "./components/Checkbox.vue"
+import Radio from "./components/Radio.vue"
+import TreeSelect from "./components/TreeSelect.vue"
 
 export {
   DatePicker,
@@ -14,4 +19,9 @@ export {
   Slider,
   Switch,
   Upload,
+  Button,
+  Cascader,
+  Checkbox,
+  Radio,
+  TreeSelect,
 }

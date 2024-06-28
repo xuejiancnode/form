@@ -21,10 +21,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import { FormEmitEventName } from '../types';
 import { DatePickerComponentProps } from '../types/DatePicker';
-import { EmitEventNameEnumKeys } from '../types/emit';
 import { ElDatePicker } from "element-plus"
-import { ref, watchEffect } from "vue"
+import { withDefaults, ref, watchEffect } from "vue"
 
 defineOptions({
   name: "DatePicker"
@@ -41,7 +41,10 @@ const props = withDefaults(defineProps<DatePickerComponentProps>(), {
   rangeSeparator: "-",
 })
 
-const emit = defineEmits([EmitEventNameEnumKeys['onUpdate:modelValue']])
+const emit = defineEmits([
+  FormEmitEventName.updateModelValue,
+  FormEmitEventName.change
+])
 
 const dateValue = ref("")
 
@@ -50,7 +53,8 @@ watchEffect(() => {
 })
 
 function changeHandle(date: any) {
-  emit(EmitEventNameEnumKeys['onUpdate:modelValue'], date)
+  emit(FormEmitEventName.updateModelValue, date)
+  emit(FormEmitEventName.change, date)
 }
 </script>
 <style scoped lang="scss">

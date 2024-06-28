@@ -7,7 +7,6 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmitOnError": true,
-
     /* Bundler mode */
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -17,7 +16,7 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "types": [
