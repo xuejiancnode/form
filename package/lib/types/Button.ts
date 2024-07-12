@@ -1,6 +1,7 @@
 import { FormSize, IconProps, ThemeType } from "./Form"
+import { ComponentPropsBase } from "./Form2"
 
-export interface ButtonProps {
+export interface ButtonPropsBase {
   content?: string
   action?: string
   size?: FormSize
@@ -11,6 +12,13 @@ export interface ButtonProps {
   disabled?: boolean | (() => boolean)
 }
 
-export interface ButtonComponentProps extends ButtonProps {
-  buttons?: Array<ButtonProps>
+export type ButtonComponentProps = ButtonPropsBase & {
+  buttons?: Array<ButtonPropsBase>
+}
+
+export interface ButtonProps extends ComponentPropsBase {
+  component: 'Button',
+  buttonProps?: {
+    buttons?: Array<ButtonPropsBase>
+  }
 }

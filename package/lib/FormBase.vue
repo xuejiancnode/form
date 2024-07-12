@@ -2,7 +2,7 @@
 import {
   FormEmitEventName,
   AnyProperty,
-  FormItemComponentPropsMap
+  FormItemConfig,
 } from './types';
 import {
   toNameOfHump,
@@ -14,7 +14,7 @@ export default defineComponent({
   name: "FormBase",
   props: {
     config: {
-      type: Object,
+      type: Object as () => FormItemConfig,
       default: () => {
         return {}
       }
@@ -69,21 +69,26 @@ export default defineComponent({
         // placeholder: props.config.placeholder,
         // prop: props.config.prop,
         modelValue: props.model[props.config.prop],
-        type: props.config.inputType,
-        disabled: typeof props.config.disabled === 'function' ? props.config.disabled() : props.config.disabled,
+        disabled: typeof props.config.disabled === 'function' ? props.config.disabled(props.config) : props.config.disabled,
         style: {
           minWidth: '200px'
         },
-        iconProps: props.config.iconProps,
         ...events,
       }
 
+      const componentPropsName = props.config.component.substring(0, 1).toLowerCase() + props.config.component.substring(1) + 'Props'
+      
       Object.assign(componentProps, {
-        ...props.config[FormItemComponentPropsMap[props.config.type as keyof typeof FormItemComponentPropsMap]]
+        // @ts-ignore
+        ...props.config[componentPropsName]
       })
+      if (props.config.component === 'DatePicker') { 
+        console.log('componentPropsName',componentPropsName);
+        console.log('componentProps',componentProps);
+      }
       
       return h(
-        components[props.config.type],
+        components[props.config.component],
         componentProps
       )
     }

@@ -1,5 +1,5 @@
 import { UploadUserFile } from "element-plus";
-import { FormItemComponentPropsBase } from "./Form";
+import { ComponentPropsBase, FormItemComponentPropsBase } from "./Form";
 import { Component } from "vue";
 
 export interface UploadResponse {
@@ -30,4 +30,9 @@ export interface UploadPropsBase {
   suffixIcon?: string | Component
 }
 
-export interface UploadComponentProps extends UploadPropsBase, FormItemComponentPropsBase { }
+export type UploadComponentProps = UploadPropsBase & FormItemComponentPropsBase;
+
+export interface uploadProps extends ComponentPropsBase {
+  component: "Upload",
+  uploadProps?: UploadPropsBase
+}

@@ -1,5 +1,5 @@
 import { CascaderNode } from "element-plus";
-import { FormItemComponentPropsBase, FormSize } from "./Form";
+import { ComponentPropsBase, FieldProps, FormItemComponentPropsBase, FormSize } from "./Form";
 import { AnyProperty } from "./Common";
 
 export interface CascaderFieldProps {
@@ -9,7 +9,7 @@ export interface CascaderFieldProps {
 
 export interface CascaderPropsBase {
   options: Array<AnyProperty>
-  cascaderFieldProps?: CascaderFieldProps
+  fieldProps?: FieldProps
   placeholder?: string
   clearable?: boolean
   showAllLevels?: boolean     // 输入框中是否显示选中值的完整路径	
@@ -17,17 +17,20 @@ export interface CascaderPropsBase {
   collapseTagsTooltip?: boolean
   separator?: string
   filterable?: boolean
-  filterMethod?: (node: CascaderNode, keyword: string) => boolean
   debounce?: number
-  beforeFilter?: (value: string) => boolean
   popperClass?: string
   teleported?: boolean
   tagType?: 'success' | 'info' | 'warning' | 'danger'
+  filterMethod?: (node: CascaderNode, keyword: string) => boolean
+  beforeFilter?: (value: string) => boolean
 }
 
 /**
  * Cascader API: https://element-plus.org/zh-CN/component/cascader.html#cascader-api
  */
-export interface CascaderComponentProps extends CascaderPropsBase, FormItemComponentPropsBase {
-  
+export type CascaderComponentProps = CascaderPropsBase & FormItemComponentPropsBase;
+
+export interface CascaderProps extends ComponentPropsBase {
+  component: "Cascader",
+  cascaderProps: CascaderPropsBase
 }

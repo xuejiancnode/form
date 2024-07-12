@@ -1,20 +1,20 @@
 import { AnyProperty } from "./Common"
-import { FormItemComponentPropsBase } from "./Form"
+import { ComponentPropsBase, FieldProps, FormItemComponentPropsBase } from "./Form"
 
-export interface RadioProps {
-  label?: string
-  value?: string
-  options: Array<RadioItem>
+export interface RadioItem extends AnyProperty {
+  disabled?: boolean
 }
 
-export interface RadioItem extends AnyProperty, Pick<FormItemComponentPropsBase, 'disabled' | 'size'> {
-  label?: string  // 单选框的标签描述
-  value?: any   // 单选框选中时的值
-}
-
-export interface RadioComponentProps extends FormItemComponentPropsBase {
+export type RadioComponentProps = FormItemComponentPropsBase & {
   modelValue: any
   options: Array<RadioItem>
-  value?: string
-  label?: string
+  fieldProps: FieldProps
+}
+
+export interface RadioProps extends ComponentPropsBase {
+  component: 'Radio',
+  radioProps?: {
+    options: Array<RadioItem>
+    fieldProps?: FieldProps
+  }
 }

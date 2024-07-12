@@ -2,8 +2,8 @@
   <div>
     <el-checkbox-group :model-value="modelValue" @change="checkboxChange">
       <template v-for="item in options">
-        <el-checkbox :label="item[value]">
-          {{ item[label] }}
+        <el-checkbox :label="item[fieldProps.value]">
+          {{ item[fieldProps.label] }}
         </el-checkbox>
       </template>
     </el-checkbox-group>
@@ -13,6 +13,7 @@
 import { withDefaults } from "vue";
 import { CheckboxComponentProps, FormEmitEventName } from "../types";
 import { CheckboxValueType } from "element-plus";
+import { mergeProps } from "../util";
 
 defineOptions({
   name: "Checkbox"
@@ -22,8 +23,13 @@ const props = withDefaults(defineProps<CheckboxComponentProps>(), {
   modelValue() {
     return []
   },
-  label: "label",
-  value: "value",
+})
+
+const fieldProps = computed(() => {
+  return mergeProps({
+    label: "label",
+    value: "value",
+  }, props.fieldProps)
 })
 
 const emit = defineEmits([

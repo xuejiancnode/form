@@ -1,4 +1,4 @@
-import { FormItemComponentPropsBase } from "./Form";
+import { ComponentPropsBase, FormItemComponentPropsBase } from "./Form";
 
 export interface SliderPropsBase {
   min?: number
@@ -16,4 +16,9 @@ export interface SliderPropsBase {
   height?: string
 }
 
-export interface SliderComponentProps extends SliderPropsBase, FormItemComponentPropsBase { }
+export type SliderComponentProps = SliderPropsBase & FormItemComponentPropsBase;
+
+export interface SliderProps extends ComponentPropsBase {
+  component: 'Slider',
+  sliderProps?: SliderPropsBase
+}

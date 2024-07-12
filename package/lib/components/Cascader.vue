@@ -4,7 +4,7 @@
       ref="cascaderRef"
       :model-value="modelValue"
       :options="options"
-      :props="cascaderFieldProps"
+      :props="fieldProps"
       :placeholder="placeholder"
       :clearable="clearable"
       :disabled="disabled"
@@ -27,6 +27,7 @@
 import { withDefaults, ref } from "vue";
 import { CascaderComponentProps, FormEmitEventName } from "../types";
 import { CascaderNode, CascaderValue, ElCascader as ElCascaderComponent } from "element-plus";
+import { mergeProps } from "../util";
 
 defineOptions({
   name: "Cascader"
@@ -37,12 +38,6 @@ const props = withDefaults(defineProps<CascaderComponentProps>(), {
   options() {
     return []
   },
-  cascaderFieldProps() {
-    return {
-      label: "label",
-      value: "value"
-    }
-  },
   clearable: false,
   showAllLevels: true,
   collapseTagsTooltip: false,
@@ -51,6 +46,13 @@ const props = withDefaults(defineProps<CascaderComponentProps>(), {
   popperClass: "",
   teleported: true,
   tagType: "info"
+})
+
+const fieldProps = computed(() => {
+  return mergeProps({
+    label: "label",
+    value: "value",
+  }, props.fieldProps)
 })
 
 const emit = defineEmits([

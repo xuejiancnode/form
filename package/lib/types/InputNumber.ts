@@ -1,4 +1,4 @@
-import { FormItemComponentPropsBase } from "./Form";
+import { ComponentPropsBase, FormItemComponentPropsBase } from "./Form";
 
 export interface InputNumberPropsBase {
   clearable?: boolean
@@ -13,4 +13,9 @@ export interface InputNumberPropsBase {
   valueOnClear?: number | null | 'min' | 'max'
 }
 
-export interface InputNumberComponentProps extends InputNumberPropsBase, FormItemComponentPropsBase { }
+export type InputNumberComponentProps = InputNumberPropsBase & FormItemComponentPropsBase;
+
+export interface InputNumberProps extends ComponentPropsBase {
+  component: 'InputNumber',
+  inputNumberProps?: InputNumberPropsBase
+}

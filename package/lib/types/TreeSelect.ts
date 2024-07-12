@@ -1,5 +1,5 @@
 import { AnyProperty } from "./Common"
-import { FormItemComponentPropsBase } from "./Form"
+import { ComponentPropsBase, FormItemComponentPropsBase } from "./Form"
 
 export interface TreeSelectItem {
   label?: string
@@ -9,8 +9,9 @@ export interface TreeSelectItem {
   class?: string
 }
 
-export interface TreeSelectProps {
+export interface TreeSelectPropsBase {
   data: Array<TreeProps | AnyProperty>
+  placeholder?: string
   treeProps?: TreeProps   // 指定tree加载字段
   changeValue?: string  // 自定义change事件返回值，默认为当前选中节点
   nodeKey?: string  // 数节点的唯一标识
@@ -35,6 +36,9 @@ export interface TreeProps {
   class?: string
 }
 
-export interface TreeSelectComponentProps extends TreeSelectProps, FormItemComponentPropsBase {
-  placeholder?: string
+export type TreeSelectComponentProps = TreeSelectPropsBase & FormItemComponentPropsBase;
+
+export interface TreeSelectProps extends ComponentPropsBase {
+  component: "TreeSelect",
+  treeSelectProps?: TreeSelectPropsBase
 }

@@ -1,4 +1,4 @@
-import { FormItemComponentPropsBase } from "./Form"
+import { ComponentPropsBase, FieldProps, FormItemComponentPropsBase } from "./Form"
 
 export interface OptionItem {
   label?: string
@@ -7,8 +7,7 @@ export interface OptionItem {
 }
 
 export interface SelectPropsBase {
-  options: OptionItem[]
-  valueKey?: string
+  options: Array<OptionItem>
   clearable?: boolean
   placeholder?: string
   multiple?: boolean
@@ -21,10 +20,12 @@ export interface SelectPropsBase {
   fitInputWidth?: boolean
   tagType?: '' | 'success' | 'info' | 'warning' | 'danger'
   maxCollapseTags?: number
-  defaultProps?: {
-    label: string
-    value: string
-  },
+  fieldProps?: FieldProps
 }
 
-export interface SelectComponentProps extends SelectPropsBase, FormItemComponentPropsBase { }
+export type SelectComponentProps = SelectPropsBase & FormItemComponentPropsBase;
+
+export interface SelectProps extends ComponentPropsBase {
+  component: "Select",
+  selectProps?: SelectPropsBase
+}

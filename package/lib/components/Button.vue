@@ -36,9 +36,9 @@
         :link="button.link"
         :disabled="buttonDisabled(button.disabled)">
         <template #default>
-          <div class="flex items-center">
+          <div class="button__inner">
             <template v-if="button.iconProps?.prefix">
-              <span class="inline-block items-center mr-[7px]">
+              <span class="">
                 <Icon 
                   :name="button.iconProps.prefix" 
                   :type="button.iconProps.type" 
@@ -47,10 +47,10 @@
               </span>
             </template>
             <slot>
-              <span class="inline-block items-center">{{ button.content }}</span>
+              <span>{{ button.content }}</span>
             </slot>
             <template v-if="button.iconProps?.suffix">
-              <span class="inline-block items-center ml-[7px]">
+              <span class="">
                 <Icon 
                   :name="button.iconProps?.suffix" 
                   :type="button.iconProps.type" 
@@ -85,5 +85,7 @@ const buttonDisabled = computed(() => {
 })
 </script>
 <style scoped lang="scss">
-  
+.button__inner {
+  line-height: normal;
+}
 </style>

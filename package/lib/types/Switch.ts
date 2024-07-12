@@ -1,5 +1,5 @@
 import { Component } from "vue";
-import { FormItemComponentPropsBase } from "./Form";
+import { ComponentPropsBase, FormItemComponentPropsBase } from "./Form";
 
 export interface SwitchPropsBase {
   loading?: boolean
@@ -14,4 +14,9 @@ export interface SwitchPropsBase {
   beforeChange?: () => Promise<boolean>
 }
 
-export interface SwitchComponentProps extends SwitchPropsBase, FormItemComponentPropsBase { }
+export type SwitchComponentProps = SwitchPropsBase & FormItemComponentPropsBase;
+
+export interface SwitchProps extends ComponentPropsBase {
+  component: "Switch"
+  switchProps?: SwitchPropsBase
+}

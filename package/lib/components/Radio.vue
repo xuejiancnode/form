@@ -2,7 +2,7 @@
   <div>
     <el-radio-group :model-value="modelValue" @change="valueChange">
       <template v-for="item in options">
-        <el-radio :label="item.value">{{ item.label }}</el-radio>
+        <el-radio :label="item[fieldProps.value]">{{ item[fieldProps.label] }}</el-radio>
       </template>
     </el-radio-group>
   </div>
@@ -13,6 +13,7 @@ import {
   FormEmitEventName,
   RadioComponentProps,
 } from '../types';
+import { mergeProps } from "../util";
 
 defineOptions({
   name: "Radio"
@@ -21,8 +22,13 @@ defineOptions({
 const props = withDefaults(defineProps<RadioComponentProps>(), {
   modelValue: "",
   disabled: false,
-  label: "label",
-  value: "value",
+})
+
+const fieldProps = computed(() => {
+  return mergeProps({
+    label: "label",
+    value: "value",
+  }, props.fieldProps)
 })
 
 const emit = defineEmits([

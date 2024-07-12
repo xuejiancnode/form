@@ -1,5 +1,6 @@
 import { Component } from "vue";
 import { FormItemComponentPropsBase } from "./Form";
+import { ComponentPropsBase } from "./Form";
 
 export type inputType = 'text' | 'textarea' | 'password'
 
@@ -13,4 +14,9 @@ export interface InputPropsBase {
   inputRule?: (val: any) => boolean
 }
 
-export interface InputComponentProps extends InputPropsBase, FormItemComponentPropsBase { }
+export type InputComponentProps = InputPropsBase & FormItemComponentPropsBase;
+
+export interface InputProps extends ComponentPropsBase {
+  component: 'Input'
+  inputProps?: InputPropsBase
+}

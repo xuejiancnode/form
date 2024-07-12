@@ -1,21 +1,19 @@
 import { AnyProperty } from "./Common"
-import { FormEmitEventName, FormItemComponentPropsBase } from "./Form"
-
-export interface CheckboxProps {
-  label?: string
-  value?: string
-  options: Array<CheckboxItem>
+import { ComponentPropsBase, FieldProps, FormEmitEventName, FormItemComponentPropsBase } from "./Form"
+export interface CheckboxItem extends AnyProperty {
+  disabled?: boolean
 }
 
-export interface CheckboxItem extends AnyProperty, Pick<FormItemComponentPropsBase, 'disabled' | 'size'> {
-  label?: string  // 单选框的标签描述
-  value?: any   // 单选框选中时的值
-}
-
-
-export interface CheckboxComponentProps extends FormItemComponentPropsBase {
+export type CheckboxComponentProps = FormItemComponentPropsBase & {
   modelValue: string[] | number[]
   options: Array<CheckboxItem>
-  value?: string
-  label?: string
+  fieldProps: FieldProps
+}
+
+export interface CheckboxProps extends ComponentPropsBase {
+  component: 'Checkbox'
+  checkboxProps: {
+    options: Array<CheckboxItem>
+    fieldProps?: FieldProps
+  }
 }

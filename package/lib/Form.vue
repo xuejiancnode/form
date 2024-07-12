@@ -159,7 +159,7 @@ function beforeUpload(config: FormItemConfig, data: any) {
 
 function uploadSuccess(config: FormItemConfig, data: any) {
   emit('update:model', Object.assign(props.model, {
-    [config.prop]: data.response.data[config.uploadProps?.response?.filePath || 'filePath']
+    [config.prop]: data.response.data[config.uploadProps.response?.filePath || 'filePath']
   }))
   emit(FormEmitEventName.uploadSuccess, config, data)
 }

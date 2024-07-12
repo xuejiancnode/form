@@ -14,13 +14,13 @@
       :collapse-tags="collapseTags"
       :collapse-tags-tooltip="collapseTagsTooltip"
       :teleported="(teleported as unknown as boolean)"
-      :valueKey="valueKey"
+      :valueKey="fieldProps.value"
       @change="changeHandle">
       <el-option
         v-for="item in options"
         :key="item.value"
-        :label="item[defaultProps.label]"
-        :value="item[defaultProps.value]"
+        :label="item[fieldProps.label]"
+        :value="item[fieldProps.value]"
       />
     </el-select>
   </div>
@@ -30,6 +30,7 @@ import { FormEmitEventName } from '../types';
 import { SelectComponentProps } from '../types/Select';
 import { ElSelect, ElOption } from "element-plus"
 import { withDefaults } from "vue"
+import { mergeProps } from '../util';
 
 defineOptions({
   name: "Select"
@@ -46,15 +47,16 @@ const props = withDefaults(defineProps<SelectComponentProps>(), {
   popperClass: "",
   fitInputWidth: false,
   tagType: "",
-  defaultProps() {
-    return {
-      label: "label",
-      value: "value"
-    }
-  },
   options() {
     return []
   },
+})
+
+const fieldProps = computed(() => {
+  return mergeProps({
+    label: "label",
+    value: 'value'
+  }, props.fieldProps)
 })
 
 const emit = defineEmits([

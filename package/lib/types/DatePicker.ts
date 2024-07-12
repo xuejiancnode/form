@@ -1,13 +1,14 @@
 import { Component } from "vue"
-import { FormItemComponentPropsBase } from "./Form"
+import { ComponentPropsBase, FormItemComponentPropsBase } from "./Form"
 
+type DatePickerType = 'year' | 'month' | 'date' | 'dates' | 'datetime' | 'week' | 'datetimerange' | 'daterange' | 'monthrange';
 export interface DatePickerPropsBase {
   clearable?: boolean
   placeholder?: string
   startPlaceholder?: string
   endPlaceholder?: string
   rangeSeparator?: string
-  type?: 'year' | 'month' | 'date' | 'dates' | 'datetime' | 'week' | 'datetimerange' | 'daterange' | 'monthrange'
+  type?: DatePickerType
   defaultValue?: Date | [Date, Date]
   format?: string
   valueFormat?: string
@@ -17,4 +18,9 @@ export interface DatePickerPropsBase {
   prefixIcon?: string | Component
 }
 
-export interface DatePickerComponentProps extends DatePickerPropsBase, FormItemComponentPropsBase { }
+export type DatePickerComponentProps = DatePickerPropsBase & FormItemComponentPropsBase;
+
+export interface DatePickerProps extends ComponentPropsBase {
+  component: "DatePicker",
+  datePickerProps?: DatePickerPropsBase
+}

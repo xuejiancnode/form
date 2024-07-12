@@ -28,85 +28,6 @@ const model = ref({
 
 const loading = ref(false)
 
-const config = reactive<FormConfigList>([
-  {
-    label: "test",
-    prop: "test",
-    type: "Input",
-    inputProps: {
-      maxlength: 10,
-      prefixIcon: markRaw(Search)
-    },
-    disabled() {
-      return false
-    },
-  }, {
-    label: "name",
-    prop: "name",
-    type: "Input"
-  }, {
-    label: "select",
-    prop: "select",
-    type: "Select",
-    selectProps: {
-      options: [{
-        label: "1",
-        value: "1"
-      }, {
-        label: "2",
-        value: "2"
-      }]
-    }
-  }, {
-    label: "date",
-    prop: "date",
-    type: "DatePicker",
-    datePickerProps: {
-      type: "daterange",
-      teleported: true,
-      prefixIcon: markRaw(Search)
-    }
-  }, {
-    label: "number",
-    prop: "number",
-    type: "InputNumber"
-  }, {
-    label: "slider",
-    prop: "slider",
-    type: "Slider",
-    sliderProps: {
-      range: true
-    }
-  }, {
-    label: "switch",
-    prop: "switch",
-    type: "Switch",
-    switchProps: {
-      loading: true,
-      beforeChange() {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(true)
-          }, 2000)
-        })
-      },
-    }
-  }, {
-    label: "upload",
-    prop: "upload",
-    type: "Upload",
-    uploadProps: {
-      action: "/api/file/upload",
-      headers: {
-        'Type': 'web',
-        'Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOjIxMDk4NDEwNTA5MDAwMTk3LCJyblN0ciI6Im1OcUtuNURSM2tBUUx5MHVVNmRtTExYSGhCNlZ3bDVhIn0.nprO2LqXrgECTXAhqTxKyCoZLCDhQ34tzl-ZzFFDbAM'
-      },
-      showFileList: false,
-      suffixIcon: markRaw(Upload),
-    }
-  }
-])
-
 function handle(data) {
   console.log(data);
   
@@ -514,6 +435,144 @@ const cascaderValue = ref<Array<number>>([])
 const checkboxValue = ref<Array<number>>([])
 const radioValue = ref<Array<number>>()
 const treeSelectValue = ref('')
+const config = reactive<FormConfigList>([
+  {
+    label: "test",
+    prop: "test",
+    component: 'Input',
+    inputProps: {
+      maxlength: 10,
+      prefixIcon: markRaw(Search)
+    },
+    disabled() {
+      return false
+    },
+  }, {
+    label: "",
+    prop: "",
+    component: "Button",
+    buttonProps: {
+      buttons: [
+        {
+          content: "按钮1",
+          action: "action",
+          type: "primary"
+        }, {
+          content: "按钮2",
+          action: "action",
+          type: "danger"
+        }
+      ]
+    }
+  }, {
+    label: "Cascader",
+    prop: "",
+    component: "Cascader",
+    cascaderProps: {
+      options: options.value,
+    }
+  }, {
+    label: "",
+    prop: "",
+    component: "Checkbox",
+    checkboxProps: {
+      options: [
+        {
+          label: "label1",
+          value: 1
+        }, {
+          label: "label2",
+          value: 2
+        }
+      ],
+    }
+  }, {
+    label: "",
+    prop: "",
+    component: "DatePicker",
+    datePickerProps: {
+      format: "YYYY-MM-DD HH-mm:ss",
+      valueFormat: "YYYY-MM-DD HH-mm:ss"
+    }
+  }, {
+    label: "",
+    prop: "",
+    component: "InputNumber",
+    inputNumberProps: {
+      placeholder: "请输入数字",
+      controlsPosition: 'right',
+    }
+  }, {
+    label: "",
+    prop: "",
+    component: 'Radio',
+    radioProps: {
+      options: [
+        {
+          label: "radio1",
+          value: 1
+        }, {
+          label: "radio2",
+          value: 2
+        }
+      ]
+    }
+  }, {
+    label: "select",
+    prop: "select",
+    component: "Select",
+    selectProps: {
+      options: [{
+        label: "1",
+        value: "1"
+      }, {
+        label: "2",
+        value: "2"
+      }]
+    }
+  }, {
+    label: "slider",
+    prop: "slider",
+    component: "Slider",
+    sliderProps: {
+      range: true
+    }
+  }, {
+    label: "switch",
+    prop: "switch",
+    component: "Switch",
+    switchProps: {
+      loading: true,
+      beforeChange() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(true)
+          }, 2000)
+        })
+      },
+    }
+  }, {
+    label: "",
+    prop: "",
+    component: "TreeSelect",
+    treeSelectProps: {
+      data: treeSelectData
+    }
+  }, {
+    label: "upload",
+    prop: "upload",
+    component: "Upload",
+    uploadProps: {
+      action: "/api/file/upload",
+      headers: {
+        'Type': 'web',
+        'Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOjIxMDk4NDEwNTA5MDAwMTk3LCJyblN0ciI6Im1OcUtuNURSM2tBUUx5MHVVNmRtTExYSGhCNlZ3bDVhIn0.nprO2LqXrgECTXAhqTxKyCoZLCDhQ34tzl-ZzFFDbAM'
+      },
+      showFileList: false,
+      suffixIcon: markRaw(Upload),
+    }
+  }
+])
 </script>
 
 <template>
@@ -538,7 +597,17 @@ const treeSelectValue = ref('')
       :input-rule="inputRule"
       placeholder="输入框">
     </Input>
-
+    <Cascader 
+      style="margin-left: 5px;"
+      clearable
+      v-model:model-value="cascaderValue"
+      placeholder="级联选择器"
+      :options="options" 
+      :cascader-field-props="{
+        label: 'label',
+        value: 'value',
+      }"/>
+<!-- 
     <Button :buttons="buttons">按钮</Button>
     <Cascader 
       style="margin-left: 5px;"
@@ -560,7 +629,7 @@ const treeSelectValue = ref('')
           children: 'children',
         }"
         check-strictly
-        placeholder="树形选择器" />
+        placeholder="树形选择器" /> -->
   </div>
   <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
