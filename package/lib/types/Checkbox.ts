@@ -7,7 +7,7 @@ export interface CheckboxItem extends AnyProperty {
 export type CheckboxComponentProps = FormItemComponentPropsBase & {
   modelValue: string[] | number[]
   options: Array<CheckboxItem>
-  fieldProps: FieldProps
+  fieldProps?: FieldProps
 }
 
 export interface CheckboxProps extends ComponentPropsBase {

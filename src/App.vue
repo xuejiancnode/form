@@ -12,7 +12,8 @@ import {
   Checkbox,
   CheckboxItem,
   Radio,
-  TreeSelect
+  TreeSelect,
+  ButtonComponentProps
 } from '../package/index';
 
 const model = ref({
@@ -57,7 +58,7 @@ function inputRule(val) {
   return true
 }
 
-const buttons = reactive<Array<ButtonProps>>([
+const buttons = reactive<Array<ButtonComponentProps>>([
   {
     content: "按钮1",
     type: "danger",
@@ -607,7 +608,7 @@ const config = reactive<FormConfigList>([
         label: 'label',
         value: 'value',
       }"/>
-<!-- 
+
     <Button :buttons="buttons">按钮</Button>
     <Cascader 
       style="margin-left: 5px;"
@@ -619,9 +620,12 @@ const config = reactive<FormConfigList>([
         label: 'label',
         value: 'value',
       }"/>
+      {{ checkboxValue }}
       <Checkbox v-model:model-value="checkboxValue" :options="checkbox" />
+      {{ radioValue }}
       <Radio v-model:model-value="radioValue" :options="checkbox" />
       <tree-select 
+        style="margin-left: 15px;"
         v-model:model-value="treeSelectValue" 
         :data="treeSelectData" 
         :tree-props="{
@@ -629,7 +633,7 @@ const config = reactive<FormConfigList>([
           children: 'children',
         }"
         check-strictly
-        placeholder="树形选择器" /> -->
+        placeholder="树形选择器" />
   </div>
   <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>

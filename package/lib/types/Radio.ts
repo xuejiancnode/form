@@ -8,7 +8,7 @@ export interface RadioItem extends AnyProperty {
 export type RadioComponentProps = FormItemComponentPropsBase & {
   modelValue: any
   options: Array<RadioItem>
-  fieldProps: FieldProps
+  fieldProps?: FieldProps
 }
 
 export interface RadioProps extends ComponentPropsBase {
