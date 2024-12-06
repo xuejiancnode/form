@@ -21,7 +21,10 @@
         :key="item.value"
         :label="item[fieldProps.label]"
         :value="item[fieldProps.value]"
-      />
+        />
+      <template v-for="(_, name) in slots" #[name]>
+        <slot :name="name"></slot>
+      </template>
     </el-select>
   </div>
 </template>
@@ -35,6 +38,12 @@ import { mergeProps } from '../util';
 defineOptions({
   name: "Select"
 })
+
+const slots = defineSlots<{
+  default(): any,
+  prefix(): any,
+  empty(): any,
+}>()
 
 const props = withDefaults(defineProps<SelectComponentProps>(), {
   multiple: false,

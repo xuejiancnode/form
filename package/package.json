@@ -1,6 +1,6 @@
 {
   "name": "fast-form-ui",
-  "version": "0.1.101",
+  "version": "0.1.103",
   "description": "基于 vue3 + Element-Plus + ts 实现的表单组件。",
   "author": "xuejian",
   "private": false,

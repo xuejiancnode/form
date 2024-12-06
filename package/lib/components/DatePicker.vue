@@ -16,7 +16,9 @@
       :default-value="defaultValue"
       :prefix-icon="prefixIcon"
       @change="changeHandle">
-
+      <template v-for="(_, name) in slots" #[name]="cell">
+        <slot :name="name" v-bind="cell"></slot>
+      </template>
     </el-date-picker>
   </div>
 </template>
@@ -29,6 +31,11 @@ import { withDefaults, ref, watchEffect } from "vue"
 defineOptions({
   name: "DatePicker"
 })
+
+const slots = defineSlots<{
+  default(cell: any): any,
+  rangeSeparator(): any,
+}>()
 
 const props = withDefaults(defineProps<DatePickerComponentProps>(), {
   clearable: false,

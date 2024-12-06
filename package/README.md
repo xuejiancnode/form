@@ -1,25 +1,50 @@
-# @xuejian/form
+# fast-form-ui
 
 使用 `vue3` `ts`，基于 `element-plus` 进行二次封装的 `Form` 组件，可通过简单的 json 配置快速展示表单组件。
 
 
+[Docs | 文档](https://xuejiancnode.github.io/it-docs/npm-package/fast-form-ui.html)
+
+
+
 ## 安装
 
+### NPM
+
 ```shell
-npm install @xuejian/form@latest --save
+npm install fast-form-ui@latest --save
 ```
 
-
+### Yarn
 ```shell
-yarn add @xuejian/form@latest --save
+yarn add fast-form-ui@latest --save
 ```
 
 
 ## 使用
 
+### 手动导入
+
+```html
+<template>
+  <Input v-model:model-value="modelValue" />
+</template>
+
+<script setup lang="ts">
+import { Input } from "fast-form-ui"
+import { ref } from "vue";
+
+const modelValue = ref('')
+</script>
+```
+
+
+
+### 完整引入
+
 ```js
 // main.ts
-import Form from "@xuejian/form"
+import Form from "fast-form-ui"
 
 app.use(Form);
 ```
@@ -30,84 +55,19 @@ app.use(Form);
 </template>
 
 <script setup lang="ts">
-import { FormConfigList } from "@xuejian/form/lib/types/Form";
+import { FormConfigList } from "fast-form-ui/lib/types/Form";
 import { reactive } from "vue";
 
 const model = ref({
-  test: '',
-  name: '',
-  select: "",
-  date: [],
-  number: null,
-  slider: null,
-  switch: true
+  value: ""
 })
 
 const config = reactive<FormConfigList>([
   {
-    label: "test",
-    prop: "test",
-    type: "Input",
-    inputProps: {
-      maxlength: 10
-    },
-    disabled() {
-      return false
-    },
-  }, {
-    label: "name",
-    prop: "name",
-    type: "Input"
-  }, {
-    label: "select",
-    prop: "select",
-    type: "Select",
-    selectProps: {
-      options: [{
-        label: "1",
-        value: "1"
-      }, {
-        label: "2",
-        value: "2"
-      }]
-    }
-  }, {
-    label: "date",
-    prop: "date",
-    type: "DatePicker",
-    datePickerProps: {
-      type: "daterange",
-      teleported: true
-    }
-  }, {
-    label: "number",
-    prop: "number",
-    type: "InputNumber"
-  }, {
-    label: "slider",
-    prop: "slider",
-    type: "Slider",
-    sliderProps: {
-      range: true
-    }
-  }, {
-    label: "switch",
-    prop: "switch",
-    type: "Switch",
-    switchProps: {
-      loading: true,
-      beforeChange() {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(true)
-          }, 2000)
-        })
-      },
-    }
-  }, {
-    label: "upload",
-    prop: "upload",
-    type: "Upload",
+    label: "标签",
+    prop: "value",
+    component: "Input",
+    placeholder: "请输入"
   }
 ])
 </script>

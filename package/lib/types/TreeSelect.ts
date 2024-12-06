@@ -39,6 +39,6 @@ export interface TreeProps {
 export type TreeSelectComponentProps = TreeSelectPropsBase & FormItemComponentPropsBase;
 
 export interface TreeSelectProps extends ComponentPropsBase {
-  component: "TreeSelect",
+  component: "TreeSelect"
   treeSelectProps?: TreeSelectPropsBase
 }

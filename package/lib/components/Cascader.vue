@@ -20,7 +20,11 @@
       :teleported="teleported"
       :tag-type="tagType"
       @change="handleChange"
-    />
+    >
+      <template v-for="(_, name) in slots" #[name]="scopeData">
+        <slot :name="name" v-bind="scopeData"></slot>
+      </template>
+    </el-cascader>
   </div>
 </template>
 <script setup lang="ts">
@@ -32,6 +36,11 @@ import { mergeProps } from "../util";
 defineOptions({
   name: "Cascader"
 })
+
+const slots = defineSlots<{
+  default(scopeData: {node: any, data: any}): any
+  empty(): any
+}>()
 
 const props = withDefaults(defineProps<CascaderComponentProps>(), {
   modelValue: [],

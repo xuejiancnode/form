@@ -37,30 +37,14 @@
           </el-col>
         </el-row>
       </template>
-      <!-- <template v-for="(cfg, index) in config">
-        <FormBase 
-          v-if="cfg.visibled === undefined ||  cfg.visibled()"
-          :key="index" 
-          :config="cfg" 
-          :model="model"
-          @update:modelValue="(value) => updateModelValue(cfg, value)"
-          @before-upload="(data) => beforeUpload(cfg, data)"
-          @upload-success="(data) => uploadSuccess(cfg, data)"
-          @upload-error="(data) => uploadError(cfg, data)">
-        </FormBase>
-      </template> -->
-      <!-- <el-form-item>
-        <el-button v-if="search" type="primary" @click="searchHandle">{{ searchText }}</el-button>
-        <el-button v-if="clear" type="default" plain @click="resetHandle">{{ clearText }}</el-button>
-      </el-form-item> -->
     </el-form>
   </div>
 </template>
 <script setup lang="ts">
+import { FormConfigList, FormEmitEventName, FormComponentProps, FormItemConfig } from './types';
+import { ElForm, ElMessage } from "element-plus"
+import { calcLayoutCount } from './util';
 import FormBase from './FormBase.vue';
-import { FormConfigList, FormEmitEventName } from './types';
-import { FormComponentProps, FormItemConfig, FormComponentEmits } from './types/Form';
-import { ElForm, ElMessage, ElFormItem, ElButton } from "element-plus"
 import "element-plus/theme-chalk/index.css"
 
 defineOptions({
@@ -99,50 +83,9 @@ const formConfig = computed(() => {
   })
 })
 
-
-/**
- * 动态计算表单布局
- * @param arr 表单配置列表
- * @param columns 列数
- */
- function calcLayoutCount(arr: FormConfigList, columns?: number) {
-  let result = []
-  let currentLine = []
-
-  for (let i = 0; i < arr.length; i++) {
-    const item = arr[i];
-    if (item.block) {
-      if (currentLine.length > 0) {
-        result.push(currentLine)
-        currentLine = []
-      }
-      result.push([item])
-    } else {
-      currentLine.push(item)
-      if (currentLine.length === columns) {
-        result.push(currentLine)
-        currentLine = []
-      }
-    }
-  }
-
-  if (currentLine.length > 0 && !arr[arr.length - 1].block) {
-    result.push(currentLine)
-    currentLine = []
-  }
-
-  return result
-}
-
 function updateModelValue(config: FormItemConfig, value: any) {
   emit('update:model', Object.assign(props.model, {
     [config.prop]: value
-  }))
-}
-
-function updateHandle(config: FormItemConfig, data: any) {
-  emit('update:model', Object.assign(props.model, {
-    [config.prop]: data
   }))
 }
 
@@ -170,10 +113,6 @@ function uploadError(config: FormItemConfig, data: any) {
     type: "error"
   })
   emit(FormEmitEventName.uploadError, config, data)
-}
-
-function resetHandle() {
-  formRef.value?.resetFields()
 }
 
 const formRef = ref<InstanceType<typeof ElForm>>()

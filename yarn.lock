@@ -707,6 +707,14 @@ estree-walker@^3.0.3:
   dependencies:
     "@types/estree" "^1.0.0"
 
+fast-form-ui@^0.1.102:
+  version "0.1.102"
+  resolved "https://registry.npmmirror.com/fast-form-ui/-/fast-form-ui-0.1.102.tgz#6f87f98ccb3cf456a49b071c00a1e7aed71bcd04"
+  integrity sha512-3pVB+fWy9yE8WTpdnNHi+wI0jMAt4j/V7u2W5Kp53ywjBnsd7cayJ2LfUhx2Aby6P+89KlCn6fo8VXlFJuvWBA==
+  dependencies:
+    element-plus "^2.4.4"
+    vue "^3.3.11"
+
 fast-glob@^3.3.1, fast-glob@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npmmirror.com/fast-glob/-/fast-glob-3.3.2.tgz#a904501e57cfdd2ffcded45e99a54fef55e46129"

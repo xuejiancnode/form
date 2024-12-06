@@ -34,8 +34,11 @@
           </template>
         </el-button>
       </template>
-      <template v-else-if="trigger">
+      <template v-if="trigger" #trigger>
         <component :is='trigger'></component>
+      </template>
+      <template v-for="(_, name) in slots" #[name]="scopeData">
+        <slot :name="name" v-bind="scopeData"></slot>
       </template>
     </el-upload>
   </div>
@@ -49,6 +52,13 @@ import { FormEmitEventName } from '../types';
 defineOptions({
   name: "Upload"
 })
+
+const slots = defineSlots<{
+  default(): any
+  trigger(): any
+  tip(): any
+  file(scopeData: {file: UploadFile}): any
+}>()
 
 const props = withDefaults(defineProps<UploadComponentProps>(), {
   action: "#",

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Form from '../package/lib/Form.vue';
+import { registerComponent } from "../package/lib/components/index";
 import { ref, reactive } from "vue"
 import { Search, Upload } from "@element-plus/icons-vue"
 import { FormRules } from 'element-plus';
@@ -7,19 +8,21 @@ import {
   Input,
   FormConfigList,
   Button,
-  ButtonProps,
   Cascader,
   Checkbox,
   CheckboxItem,
   Radio,
   TreeSelect,
-  ButtonComponentProps
+  ButtonComponentProps,
 } from '../package/index';
+import Select from '../package/lib/components/Select.vue';
 
-const model = ref({
+const modelInfo = ref({
   test: '',
   name: '',
   select: "",
+  checkbox: [],
+  radio: null,
   date: [],
   number: null,
   slider: null,
@@ -436,6 +439,34 @@ const cascaderValue = ref<Array<number>>([])
 const checkboxValue = ref<Array<number>>([])
 const radioValue = ref<Array<number>>()
 const treeSelectValue = ref('')
+
+const custom1 = defineComponent({
+  emits: ['click'],
+  setup(props, ctx) {
+    const custom1 = h(
+      'button',
+      {
+        onClick: (ev) => {
+          ctx.emit('click', 'customEvent')
+          ev.preventDefault();
+        }
+      },
+      "自定义按钮"
+    )
+    return {
+      custom1
+    }
+  },
+  render() {
+    return this.custom1
+  }
+})
+
+function clickHandle(a) {
+  console.log(a);
+  
+}
+registerComponent('customButton', custom1)
 const config = reactive<FormConfigList>([
   {
     label: "test",
@@ -443,11 +474,23 @@ const config = reactive<FormConfigList>([
     component: 'Input',
     inputProps: {
       maxlength: 10,
-      prefixIcon: markRaw(Search)
+      iconProps: {
+        prefix: h('img', { src: '/icons/ai-analysis-light.png' }),
+        type: 'img',
+        size: 20
+      },
+      prepend: 'https://'
     },
     disabled() {
       return false
     },
+    visibled(cfg, model) {
+      return model.radio === 1;
+    }
+  }, {
+    label: "",
+    prop: "",
+    component: 'customButton',
   }, {
     label: "",
     prop: "",
@@ -474,7 +517,7 @@ const config = reactive<FormConfigList>([
     }
   }, {
     label: "",
-    prop: "",
+    prop: "checkbox",
     component: "Checkbox",
     checkboxProps: {
       options: [
@@ -496,7 +539,7 @@ const config = reactive<FormConfigList>([
       valueFormat: "YYYY-MM-DD HH-mm:ss"
     }
   }, {
-    label: "",
+    label: "123",
     prop: "",
     component: "InputNumber",
     inputNumberProps: {
@@ -505,7 +548,7 @@ const config = reactive<FormConfigList>([
     }
   }, {
     label: "",
-    prop: "",
+    prop: "radio",
     component: 'Radio',
     radioProps: {
       options: [
@@ -574,21 +617,25 @@ const config = reactive<FormConfigList>([
     }
   }
 ])
+
+const selectValue = ref('')
+
 </script>
 
 <template>
   <div style="width: 100%;">
-    {{ model }}
+    {{ modelInfo }}
     <Form 
       ref="FormRef"
       :config="config" 
-      v-model:model="model" 
+      v-model:model="modelInfo" 
       inline
       auto-column
       label-width="90px" 
       search
       clear
-      @update:model="handle">
+      @update:model="handle"
+      @click="clickHandle">
     </Form>
     <br>
     <el-button @click="save">保存</el-button>
@@ -596,7 +643,13 @@ const config = reactive<FormConfigList>([
     <Input 
       v-model:model-value="value"
       :input-rule="inputRule"
-      placeholder="输入框">
+      :icon-props="{prefix: '/icons/ai-analysis-light.png', type: 'img', size: '20px'}"  
+      placeholder="输入框111">
+      <template #append>
+        <span>
+          append
+        </span>
+      </template>
     </Input>
     <Cascader 
       style="margin-left: 5px;"
@@ -607,7 +660,7 @@ const config = reactive<FormConfigList>([
       :cascader-field-props="{
         label: 'label',
         value: 'value',
-      }"/>
+      }"></Cascader>
 
     <Button :buttons="buttons">按钮</Button>
     <Cascader 
@@ -634,6 +687,22 @@ const config = reactive<FormConfigList>([
         }"
         check-strictly
         placeholder="树形选择器" />
+        {{ selectValue }}
+      <Select 
+        style="margin-left: 15px;"
+        v-model:model-value="selectValue"
+        :options="treeSelectData" 
+        placeholder="请选择"
+        >
+        <template #default>
+          <el-option 
+            v-for="(item, index) in treeSelectData" 
+            :key="index"
+            :value="item.value">
+            <span>{{ index + 1 }}-{{ item.label }}</span>
+          </el-option>
+        </template>
+      </Select>
   </div>
   <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
@@ -644,5 +713,11 @@ html, body, #app {
   height: 100%;
   padding: 0;
   margin: 0px;
+}
+</style>
+
+<style scope>
+.el-input-number {
+  width: 100%;
 }
 </style>

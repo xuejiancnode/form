@@ -1,28 +1,36 @@
 <template>
-  <el-icon 
-    v-if="type === 'class'"
-    :color="color"
-    class="!w-auto !m-0"
-    :size="iconSize">
-    <component class="icons" :is="icon"></component>
-  </el-icon>
-  <svg 
-    v-if="type === 'svg'" 
-    class="icon-svg" 
-    aria-hidden="true" 
-    :style="{
-      '--color': svgColor,
-      '--icon-size': iconSize
-    }">
-    <use :xlink:href="icon"></use>
-  </svg>
-  <img 
-    v-if="type === 'img'" 
-    :src="name" 
-    class="img-icon object-contain" 
-    :style="{
-      '--icon-size': iconSize
-    }">
+  <span class="icon__wrapper" :style="{
+    '--icon-size': iconSize,
+    '--color': svgColor
+  }">
+    <el-icon 
+      v-if="type === 'class'"
+      :color="color"
+      class="!w-auto !m-0"
+      :size="iconSize">
+      <component class="icons" :is="icon"></component>
+    </el-icon>
+    <template v-if="type === 'svg'">
+      <svg 
+        v-if="typeof icon === 'string'" 
+        class="icon-svg" 
+        aria-hidden="true">
+        <use :xlink:href="icon"></use>
+      </svg>
+      <span v-else class="icon-svg" >
+        <component :is='icon'></component>
+      </span>
+    </template>
+    <template v-if="type === 'img'">
+      <img 
+        v-if="typeof icon === 'string'" 
+        :src="icon" 
+        class="img-icon object-contain">
+      <span v-else class="img-icon">
+        <component :is='icon'></component>
+      </span>
+    </template>
+  </span>
 </template>
 
 <script lang="ts" setup>
@@ -35,6 +43,7 @@ import {
   ref,
   watchEffect,
 } from "vue"
+import * as Icons from "@element-plus/icons-vue"
 
 defineOptions({
   name: "Icon"
@@ -49,11 +58,19 @@ const props = withDefaults(defineProps<IconComponentProps>(), {
 
 let icon = computed(() => {
   if (props.type === 'class') {
-    return ''
-  } else {
-    let name = props.name.includes('#') ? props.name : '#' + props.name
+    return typeof props.name === 'string' ?
+      // @ts-ignore
+      Icons[props.name] :
+      props.name
+  } else if(props.type === 'svg') {
+    let name = props.name
+    if (typeof props.name === 'string') {
+      name = props.name.includes('#') ? props.name : '#' + props.name
+    }
     return name
   }
+  
+  return props.name
 })
 
 
@@ -83,6 +100,10 @@ function addUnit(value: number | string, defaultUnit = 'px') {
 </script>
 
 <style lang="scss" scoped>
+.icon__wrapper {
+  display: inline-flex;
+  align-items: center;
+}
 .icon-svg {
   width: 1em;
   height: 1em;
@@ -94,5 +115,11 @@ function addUnit(value: number | string, defaultUnit = 'px') {
 .img-icon {
   width: var(--icon-size, 16px);
   height: var(--icon-size, 16px);
+  display: inline-flex;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 </style>

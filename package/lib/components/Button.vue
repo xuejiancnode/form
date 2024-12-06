@@ -6,7 +6,8 @@
         :size="size"
         :plain="plain"
         :text="link"
-        :disabled="buttonDisabled(disabled)">
+        :disabled="buttonDisabled(disabled)"
+        @click="clickHandle(action)">
         <template #default>
           <div class="flex items-center">
             <template v-if="iconProps?.prefix">
@@ -34,7 +35,8 @@
         :size="button.size"
         :plain="button.plain"
         :link="button.link"
-        :disabled="buttonDisabled(button.disabled)">
+        :disabled="buttonDisabled(button.disabled)"
+        @click="clickHandle(button.action)">
         <template #default>
           <div class="button__inner">
             <template v-if="button.iconProps?.prefix">
@@ -65,7 +67,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ButtonComponentProps } from "../types";
+import { ButtonComponentProps, FormEmitEventName } from "../types";
 import { computed } from "vue"
 import Icon from "./Icon/index.vue"
 
@@ -74,6 +76,9 @@ defineOptions({
 })
 
 const props = defineProps<ButtonComponentProps>()
+const emit = defineEmits([
+  FormEmitEventName.click
+])
 
 const buttonDisabled = computed(() => {
   return (disabled?: boolean | (() => boolean)) => {
@@ -83,6 +88,10 @@ const buttonDisabled = computed(() => {
     return disabled
   }
 })
+
+function clickHandle(action: string) {
+  emit(FormEmitEventName.click, action)
+}
 </script>
 <style scoped lang="scss">
 .button__inner {

@@ -12,7 +12,8 @@ import {
   SliderProps,
   SwitchProps,
   TreeSelectProps,
-  uploadProps
+  uploadProps,
+  AnyProperty
 } from "./index"
 import { Component } from "vue"
 
@@ -75,9 +76,9 @@ export type FormItemConfig = {
   labelWidth?: string
   showMessage?: Boolean
   inlineMessage?: Boolean
-  disabled?: ((cfg: unknown) => boolean) | boolean
-  visibled?: ((cfg: unknown) => boolean) | boolean
-} & FormComponentConfig
+  disabled?: ((cfg: FormItemConfig, model: any) => boolean) | boolean
+  visibled?: ((cfg: FormItemConfig, model: any) => boolean) | boolean
+} & FormComponentConfig & AnyProperty
 
 export type FormConfigList = FormItemConfig[]
 

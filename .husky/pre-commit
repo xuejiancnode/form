@@ -1,3 +1,0 @@
-node ./updateVersion.js
-cd ./package
-npm publish

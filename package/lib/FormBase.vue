@@ -4,11 +4,10 @@ import {
   AnyProperty,
   FormItemConfig,
 } from './types';
-import {
-  toNameOfHump,
-} from './util';
 
 import { ElFormItem } from 'element-plus';
+import { getCustomComponents } from './components/index';
+import { toNameOfHump } from './util';
 
 export default defineComponent({
   name: "FormBase",
@@ -44,6 +43,16 @@ export default defineComponent({
       components[name] = componentModules[path].default
     })
 
+    const customComponents = getCustomComponents()
+
+    // 注册自定义组件
+    for (const name in customComponents) {
+      if (Object.prototype.hasOwnProperty.call(customComponents, name)) {
+        const component = customComponents[name];
+        components[name] = component
+      }
+    }
+
     // @ts-ignore
     const events: AnyProperty = {
       'onUpdate:modelValue'(data: any) {
@@ -54,9 +63,10 @@ export default defineComponent({
     // 注册表单组件事件回调
     function subscribeEvent() {
       Object.keys(FormEmitEventName).forEach(eventName => {
-        events[eventName] = function (data: any) {
+        // @ts-ignore
+        events[`on${toNameOfHump(eventName)}`] = function (data: any, ...args) {
           // @ts-ignore
-          emit(FormEmitEventName[eventName], data)
+          emit(FormEmitEventName[eventName], data, ...args)
         }
       })
     }
@@ -69,7 +79,7 @@ export default defineComponent({
         // placeholder: props.config.placeholder,
         // prop: props.config.prop,
         modelValue: props.model[props.config.prop],
-        disabled: typeof props.config.disabled === 'function' ? props.config.disabled(props.config) : props.config.disabled,
+        disabled: typeof props.config.disabled === 'function' ? props.config.disabled(props.config, props.model) : props.config.disabled,
         style: {
           minWidth: '200px'
         },
@@ -94,22 +104,49 @@ export default defineComponent({
     }
 
     function createElFormItem() {
-      return h(
-        ElFormItem,
-        {
-          ref: 'baseFormItem',
-          key: props.config.prop + Math.random(),
-          label: props.config.label,
-          prop: props.config.prop,
-          rules: props.config.rules,
-          style: props.config.style,
-          required: props.config.required,
-          size: props.config.size,
-          'label-width': props.config.labelWidth,
-          'show-message': props.config.showMessage,
-          'inline-message': props.config.inlineMessage
-        },() => createElComponent()
-      )
+      if (props.config.visibled === undefined || props.config.visibled) {
+        if (typeof props.config.visibled === 'function' && !props.config.visibled(props.config, props.model)) return null;
+
+        let slots = {
+          default: () => createElComponent(),
+          label: () => {
+            if (typeof props.config.label === 'string') {
+
+              return h('span', {}, [
+                props.config.asterisk ? h('span', { class: 'text-[var(--el-color-danger)] mr-[4px]' }, '*') : "",
+                props.config.label
+              ])
+            }
+
+            return props.config.label
+          }
+        }
+
+        if (!props.config.label) {
+          // @ts-ignore
+          delete slots.label
+        }
+
+        return h(
+          ElFormItem,
+          {
+            ref: 'baseFormItem',
+            key: props.config.prop + Math.random(),
+            label: props.config.label,
+            prop: props.config.prop,
+            rules: props.config.rules,
+            style: props.config.style,
+            required: props.config.required,
+            size: props.config.size,
+            'label-width': props.config.labelWidth,
+            'show-message': props.config.showMessage,
+            'inline-message': props.config.inlineMessage
+          },
+          slots
+        )
+      }
+
+      return null;
     }
     return {
       createElFormItem
