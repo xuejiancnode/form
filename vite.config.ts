@@ -35,6 +35,7 @@ export default defineConfig(({ command, mode }) => {
   }
   
   return {
+    base: mode === 'docs' ? '/form/' : '/',
     plugins: [
       GetSourceCode('./src/components', './src/sourceCode'),
       vue(),
