@@ -1,0 +1,23 @@
+{
+  "name": "@xuejian/form",
+  "version": "0.1.104",
+  "description": "基于 vue3 + Element-Plus + ts 实现的表单组件。",
+  "author": "xuejian",
+  "private": false,
+  "main": "./index.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "url": "https://gitee.com/xj_page/form"
+  },
+  "dependencies": {
+    "element-plus": "^2.4.4",
+    "vue": "^3.3.11"
+  },
+  "devDependencies": {
+    "sass": "^1.69.7",
+    "typescript": "^5.2.2"
+  }
+}
