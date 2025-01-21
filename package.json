@@ -8,12 +8,14 @@
     "build": "vite build",
     "preview": "vite preview",
     "build:docs": "vite build --mode docs",
-    "publish:npm": "node ./updateVersion.js && cd ./package && npm publish"
+    "updata:version": "git add ./package.json && git commit -m 'update version' && git push origin develop",
+    "publish:npm": "node ./updateVersion.js && cd ./package && npm publish && npm run updata:version"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@xuejian/form": "^0.1.6",
+    "child_process": "^1.0.2",
     "element-plus": "^2.4.4",
     "fast-form-ui": "^0.1.102",
     "highlight.js": "^11.11.1",
