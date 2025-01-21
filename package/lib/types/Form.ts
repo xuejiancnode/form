@@ -12,16 +12,18 @@ import {
   SliderProps,
   SwitchProps,
   TreeSelectProps,
-  uploadProps,
-  AnyProperty
+  UploadProps,
+  AnyProperty,
+  AutocompleteProps
 } from "./index"
 import { Component } from "vue"
 
 export type FormSize = '' | 'large' | 'default' | 'small'
+
 export type ThemeType = 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' | ''
 
 // 表单组件配置属性
-export type FormComponentConfig = InputProps | ButtonProps | CascaderProps | CheckboxProps | DatePickerProps | InputNumberProps | RadioProps | SelectProps | SliderProps | SwitchProps | TreeSelectProps | uploadProps;
+export type FormComponentConfig = InputProps | ButtonProps | CascaderProps | CheckboxProps | DatePickerProps | InputNumberProps | RadioProps | SelectProps | SliderProps | SwitchProps | TreeSelectProps | UploadProps | AutocompleteProps | CustomComponentProps;
 
 // 表单组件的props
 export interface FormComponentProps {
@@ -33,6 +35,7 @@ export interface FormComponentProps {
   rules?: FormRules,
   disabled?: boolean
   size?: FormSize
+  gutter?: number
   columns?: number  // 表单需要被分成多少列
   autoColumn?: boolean  // 当为行排列时是否开启自动计算列数，开启后columns无效
 }
@@ -53,20 +56,33 @@ export enum FormItemComponentPropsMap {
   Upload = "uploadProps",
   Cascader = "cascaderProps",
   Radio = "radioProps",
-  checkboxProps = "checkboxProps",
+  Checkbox = "checkboxProps",
   TreeSelect = "treeSelectProps",
   Button = "buttonProps",
+  Autocomplete = "autocompleteProps",
 }
 
 export interface ComponentPropsBase {
   component: string
 }
 
+/**
+ * 自定义组件Props
+ */
+export interface CustomComponentProps {
+  component: string
+  customProps?: AnyProperty
+}
+
+
 // 表单项的配置
 export type FormItemConfig = {
   label: string
   prop: string
   size?: FormSize
+  /**
+   * 是否独占一行，默认为false，为true时会默认设置span为24
+   */
   block?: boolean
   span?: number
   asterisk?: boolean
@@ -106,6 +122,7 @@ export enum FormEmitEventName {
   change = "change",
   focus = "focus",
   blur = "blur",
+  select = "select",
   beforeUpload = "beforeupload",
   uploadSuccess = "uploadsuccess",
   uploadError = "uploaderror",

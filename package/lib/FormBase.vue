@@ -75,14 +75,15 @@ export default defineComponent({
 
     function createElComponent() {
       const componentProps = {
+        class: 'form-item-wrapper',
         ...props.config,
         // placeholder: props.config.placeholder,
         // prop: props.config.prop,
         modelValue: props.model[props.config.prop],
         disabled: typeof props.config.disabled === 'function' ? props.config.disabled(props.config, props.model) : props.config.disabled,
-        style: {
-          minWidth: '200px'
-        },
+        // style: {
+        //   minWidth: '200px'
+        // },
         ...events,
       }
 
@@ -159,5 +160,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
+.form-item-wrapper {
+  width: 100%;
+}
+.el-form-item {
+  width: 100%;
+}
 </style>

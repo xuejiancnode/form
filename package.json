@@ -7,13 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "build:docs": "vite build --mode docs",
     "publish:npm": "node ./updateVersion.js && cd ./package && npm publish"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@highlightjs/vue-plugin": "^2.1.0",
     "@xuejian/form": "^0.1.6",
     "element-plus": "^2.4.4",
     "fast-form-ui": "^0.1.102",
+    "highlight.js": "^11.11.1",
     "util-fnc": "^1.0.2",
     "vue": "^3.3.11"
   },

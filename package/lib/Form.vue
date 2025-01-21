@@ -23,8 +23,8 @@
         </FormBase>
       </template>
       <template v-else>
-        <el-row v-for="(row, rowIndex) in (formConfig as FormConfigList[])" :key="rowIndex">
-          <el-col v-for="(col, colIndex) in row" :key="colIndex" :span="col.span || (24 / (columns || 1))">
+        <el-row v-for="(row, rowIndex) in (formConfig as FormConfigList[])" :key="rowIndex" :gutter="gutter">
+          <el-col v-for="(col, colIndex) in row" :key="colIndex" :span="col.span === undefined ? (24 / (columns || 1)) : col.span">
             <FormBase 
               :config="col" 
               :model="model"
@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<FormComponentProps>(), {
   labelWidth: '',
   labelPosition: "right",
   searchText: "搜索",
-  clearText: "清空"
+  clearText: "清空",
 })
 
 const emit = defineEmits([
@@ -72,16 +72,53 @@ const formConfig = computed(() => {
   if (props.inline) {
 
     if (props.autoColumn) {
-      return props.config
+      return resetSpan(props.config)
     }
 
-    return calcLayoutCount(props.config, props.columns)
+    return resetSpan(calcLayoutCount(props.config, props.columns))
   }
   
-  return props.config.map(item => {
+  return resetSpan(props.config.map(item => {
     return [item]
-  })
+  }))
 })
+
+/**
+ * 根据visibled属性，动态计算span
+ */
+function resetSpan(config: FormConfigList | FormConfigList[]) {
+  if (Array.isArray(config[0])) { 
+    return (config as FormConfigList[]).map(row => {
+      return row.map(item => {
+        if (
+          (item.visibled !== undefined && !item.visibled) || 
+          (typeof item.visibled === 'function' && !item.visibled(item, props.model))
+        ) {
+          return {
+            ...item,
+            span: 0,
+          }
+        }
+        return item
+      })
+    })
+  }
+
+  return (config as FormConfigList).map(item => {
+    if (
+      (item.visibled !== undefined && !item.visibled) || 
+      (typeof item.visibled === 'function' && !item.visibled(item, props.model))
+    ) {
+      
+      
+      return {
+        ...item,
+        span: 0,
+      }
+    }
+    return item
+  })
+}
 
 function updateModelValue(config: FormItemConfig, value: any) {
   emit('update:model', Object.assign(props.model, {
@@ -130,5 +167,10 @@ defineExpose({
 @import "./styles/common.scss";
 </style>
 <style scoped lang="scss">
-  
+.el-col .el-form-item {
+  margin-right: 0;
+}
+.el-row {
+  width: 100%;
+}
 </style>

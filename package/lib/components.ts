@@ -10,6 +10,7 @@ import Cascader from "./components/Cascader.vue"
 import Checkbox from "./components/Checkbox.vue"
 import Radio from "./components/Radio.vue"
 import TreeSelect from "./components/TreeSelect.vue"
+import Autocomplete from "./components/Autocomplete.vue"
 
 export {
   DatePicker,
@@ -24,4 +25,5 @@ export {
   Checkbox,
   Radio,
   TreeSelect,
+  Autocomplete
 }

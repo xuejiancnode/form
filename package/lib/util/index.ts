@@ -99,7 +99,12 @@ export function calcLayoutCount(arr: FormConfigList, columns?: number) {
 
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i];
+    // 如果当前项是块级元素，则单独一行
     if (item.block) {
+      if (!item['span']) { 
+        item.span = 24
+      }
+      // 如果当前行有元素，则先添加到结果中
       if (currentLine.length > 0) {
         result.push(currentLine)
         currentLine = []
@@ -107,6 +112,7 @@ export function calcLayoutCount(arr: FormConfigList, columns?: number) {
       result.push([item])
     } else {
       currentLine.push(item)
+      // 如果当前行元素数量达到列数，则添加到结果中
       if (currentLine.length === columns) {
         result.push(currentLine)
         currentLine = []
@@ -114,6 +120,7 @@ export function calcLayoutCount(arr: FormConfigList, columns?: number) {
     }
   }
 
+  // 处理最后一行不满的情况
   if (currentLine.length > 0 && !arr[arr.length - 1].block) {
     result.push(currentLine)
     currentLine = []

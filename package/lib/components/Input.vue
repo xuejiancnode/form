@@ -108,5 +108,8 @@ function blurHandle(e: any) {
 }
 </script>
 <style scoped lang="scss">
-  
+// 单独调用组件时设置默认宽度
+.form-item-wrapper {
+  width: 220px;
+}
 </style>

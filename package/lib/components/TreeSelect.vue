@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-item-wrapper">
     <el-tree-select
       :data="data"
       :placeholder="placeholder"
@@ -71,5 +71,7 @@ function valueChangeHandle(node: any) {
 }
 </script>
 <style scoped lang="scss">
-  
+.form-item-wrapper {
+  width: 220px;
+}
 </style>

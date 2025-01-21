@@ -89,8 +89,8 @@ const buttonDisabled = computed(() => {
   }
 })
 
-function clickHandle(action: string) {
-  emit(FormEmitEventName.click, action)
+function clickHandle(action?: string) {
+  emit(FormEmitEventName.click, action || 'click')
 }
 </script>
 <style scoped lang="scss">

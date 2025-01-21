@@ -1,5 +1,5 @@
 import { FormSize, IconProps, ThemeType } from "./Form"
-import { ComponentPropsBase } from "./Form2"
+import { ComponentPropsBase } from "./Form"
 
 export interface ButtonPropsBase {
   content?: string

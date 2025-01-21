@@ -32,7 +32,7 @@ export interface UploadPropsBase {
 
 export type UploadComponentProps = UploadPropsBase & FormItemComponentPropsBase;
 
-export interface uploadProps extends ComponentPropsBase {
+export interface UploadProps extends ComponentPropsBase {
   component: "Upload"
   uploadProps?: UploadPropsBase
 }

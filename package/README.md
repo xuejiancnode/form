@@ -1,9 +1,9 @@
-# fast-form-ui
+# Form
 
-使用 `vue3` `ts`，基于 `element-plus` 进行二次封装的 `Form` 组件，可通过简单的 json 配置快速展示表单组件。
+使用 `vue3` `ts`，基于 `element-plus` 进行二次封装的 `Form` 组件，通过简单的 json 配置快速进行表单开发。
 
 
-[Docs | 文档](https://xuejiancnode.github.io/it-docs/npm-package/fast-form-ui.html)
+[Docs | 文档](https://xuejiancnode.github.io/it-docs/npm-package/FormUI.html)
 
 
 
@@ -12,12 +12,12 @@
 ### NPM
 
 ```shell
-npm install fast-form-ui@latest --save
+npm install @xuejian/form --save
 ```
 
 ### Yarn
 ```shell
-yarn add fast-form-ui@latest --save
+yarn add @xuejian/form --save
 ```
 
 
@@ -31,7 +31,7 @@ yarn add fast-form-ui@latest --save
 </template>
 
 <script setup lang="ts">
-import { Input } from "fast-form-ui"
+import { Input } from "@xuejian/form"
 import { ref } from "vue";
 
 const modelValue = ref('')
@@ -44,7 +44,7 @@ const modelValue = ref('')
 
 ```js
 // main.ts
-import Form from "fast-form-ui"
+import Form from "@xuejian/form"
 
 app.use(Form);
 ```
@@ -55,7 +55,7 @@ app.use(Form);
 </template>
 
 <script setup lang="ts">
-import { FormConfigList } from "fast-form-ui/lib/types/Form";
+import { FormConfigList } from "@xuejian/form/lib/types/Form";
 import { reactive } from "vue";
 
 const model = ref({

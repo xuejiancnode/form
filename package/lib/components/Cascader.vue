@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="form-item-wrapper">
     <el-cascader
       ref="cascaderRef"
       :model-value="modelValue"
@@ -85,5 +85,7 @@ defineExpose({
 })
 </script>
 <style scoped lang="scss">
-  
+.form-item-wrapper {
+  width: 220px;
+}
 </style>

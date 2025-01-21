@@ -79,5 +79,7 @@ function changeHandle(value: any) {
 }
 </script>
 <style scoped lang="scss">
-  
+.form-item-wrapper {
+  width: 220px;
+}
 </style>
