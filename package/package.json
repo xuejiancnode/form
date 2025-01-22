@@ -1,6 +1,6 @@
 {
   "name": "@xuejian/form",
-  "version": "0.1.104",
+  "version": "0.1.107",
   "description": "基于 vue3 + Element-Plus + ts 实现的表单组件。",
   "author": "xuejian",
   "private": false,

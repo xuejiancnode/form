@@ -4,7 +4,7 @@
       <!-- <header>组件</header> -->
       <ul class="component-list">
         <template v-for="(_, name) in components" :key="name">
-          <li class="component-item" @click="clickComponent(name as string)">
+          <li class="component-item" :class="{ active: componentName === name }" @click="clickComponent(name as string)">
             <span>{{ name }}</span>
           </li>
         </template>
@@ -19,6 +19,9 @@
             :code="sourceCode[componentName]"
           />
         </div>
+      </template>
+      <template v-else>
+        <h1 style="margin-left: 20px;">点击右侧导航查看示例</h1>
       </template>
     </main>
   </div>
@@ -107,7 +110,10 @@ for (let i = 0; i < sourceCodeFileNames.length; i++) {
         cursor: pointer;
         transition: all 0.3s linear;
         &:hover {
-          background-color: #ccc;
+          color: #409eff;
+        }
+        &.active {
+          color: #409eff;
         }
       }
     }

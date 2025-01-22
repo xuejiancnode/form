@@ -19,8 +19,5 @@ export default function vitePluginGetSourceCode(dir, outputDir) {
   return {
     name: 'vite-plugin-get-source-code',
     enforce: 'pre',
-    load() {
-      
-    }
   }  
 }
